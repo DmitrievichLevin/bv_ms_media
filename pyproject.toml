@@ -27,6 +27,7 @@ pymssql = "2.2.10"
 pillow-heif = "^0.17.0"
 pymongo = "^4.8.0"
 types-requests = "^2.32.0.20241016"
+requests = "^2.32.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.4"
