@@ -162,7 +162,8 @@ class Media(Generic[MediaProp]):
         match mime:
             case "image":
                 logging.info("Deserializing %s image id:%s", doc, doc_id)
-                self._process_img(raw, extension)
+
+                self._process_img(raw, extension)  # type: ignore[arg-type]
             case _:
                 logging.warning("Unsupported mime detected: %s", mime)
                 raise TypeError(f"Expected image, but found {mime}.")

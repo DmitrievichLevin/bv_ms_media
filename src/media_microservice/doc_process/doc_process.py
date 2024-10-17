@@ -45,7 +45,7 @@ class DocumentProcess(SubProcess):
 
             _id, doc, doc_path, doc_id = itemgetter("id", "doc", "doc_path", "doc_id")(_meta)
 
-            return _id if not is_del else None, doc, doc_path, doc_id
+            return _id if not is_del else None, doc, doc_path, doc_id  # type: ignore[return-value]
         except Exception as e:
             raise KeyError("Expected metadata/query-params expected user_id, id(mediaId), doc, doc_id, & doc_path, but missing %s." % e) from e
 

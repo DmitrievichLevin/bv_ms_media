@@ -10,14 +10,32 @@ from .meta_proc import MetaDelete
 from .meta_proc import MetaProcess
 from .s3_proc import S3Delete
 from .s3_proc import S3Process
+from .square import request_payment_link
 from .sync_sub import Sync
 
 
 def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
     """Media Microservice Lambda Handler"""
     method = event["requestContext"]["http"]["method"]
+    path = event['rawPath']
 
     try:
+        # Temp Handle Payment Processing
+        if '/order' in path:
+            if method == "POST":
+                body = request_payment_link(event)
+                return {
+                    "statusCode": 200,
+                    "headers": {
+                        "Access-Control-Allow-Headers": "Content-Type",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
+                    },
+                    "body": body,
+                }
+            else:
+                return {"statusCode": 405, "body": {"message": f"{method} Not Allowed.", 'service': 'Square'}}
+
         match (method):
             case "POST":
 
