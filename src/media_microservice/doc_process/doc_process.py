@@ -26,7 +26,7 @@ class DocumentProcess(SubProcess):
         self.connection = pymongo.MongoClient(uri, uuidRepresentation="standard").get_database(db_name)
 
     @property
-    def __get_metadata(self) -> tuple[str, str, str, bson.ObjectId]:
+    def __get_metadata(self) -> tuple[str | None, str, str, bson.ObjectId]:
         """Get Media Metadata
 
         - Attempt extracting deps.metadata, then queryStringParameters for document properties.
@@ -43,9 +43,13 @@ class DocumentProcess(SubProcess):
         try:
             _meta = self.deps.get('metadata', self.event.get("queryStringParameters", None))
 
-            _id, doc, doc_path, doc_id = itemgetter("id", "doc", "doc_path", "doc_id")(_meta)
+            _id: str = itemgetter('id')(_meta)
+            doc: str = itemgetter('doc')(_meta)
+            doc_path: str = itemgetter('doc_path')(_meta)
+            doc_id: bson.ObjectId = itemgetter("doc_id")(_meta)
 
-            return _id if not is_del else None, doc, doc_path, doc_id  # type: ignore[return-value]
+            return _id if not is_del else None, doc, doc_path, doc_id
+
         except Exception as e:
             raise KeyError("Expected metadata/query-params expected user_id, id(mediaId), doc, doc_id, & doc_path, but missing %s." % e) from e
 
