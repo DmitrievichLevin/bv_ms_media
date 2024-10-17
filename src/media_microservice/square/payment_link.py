@@ -1,5 +1,6 @@
 """Square Payment Link Method"""
 import json
+import logging
 import os
 from typing import Any
 
@@ -50,8 +51,11 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, str]:
         }
     }
 
-    response = session.get('https://connect.squareup.com/v2/online-checkout/payment-links',
-                           headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}, json=body)
+    response = session.post('https://connect.squareup.com/v2/online-checkout/payment-links',
+                            headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}, json=body)
+    # Log response for debugging
+    logging.debug(response.json())
+
     response.raise_for_status()
 
     pay_link: str = response.json()['url']
