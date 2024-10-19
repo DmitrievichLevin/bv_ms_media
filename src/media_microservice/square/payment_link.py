@@ -44,10 +44,10 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, Any]:
     order = {
         'idempotency_key': order_key,
         "location_id": location_id,
-        "line_items": [{'object_category_id': line['object_category_id'], 'qauntity': line['qauntity']} for line in line_items],
+        "line_items": [{'catalog_object_id': line['catalog_object_id'], 'qauntity': line['qauntity']} for line in line_items],
     }
 
-    order_res = session.post('https://connect.squareupsandbox.com/v2/orders',
+    order_res = session.post('https://connect.squareup.com/v2/orders',
                              headers={'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}, json=order)
 
     order_json = order_res.json()
@@ -92,7 +92,7 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, Any]:
         ]
     }
 
-    pay_order = session.post(f'https://connect.squareupsandbox.com/v2/orders/{order_id}/pay', headers={
+    pay_order = session.post(f'https://connect.squareup.com/v2/orders/{order_id}/pay', headers={
                              'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}, json=pay_order_body)
 
     pay_json: dict[str, Any] = pay_order.json()
