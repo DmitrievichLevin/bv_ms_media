@@ -44,7 +44,7 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, Any]:
     order = {
         'idempotency_key': order_key,
         "location_id": location_id,
-        "line_items": [{'catalog_object_id': line['catalog_object_id'], 'qauntity': line['qauntity']} for line in line_items],
+        "line_items": [{'catalog_object_id': line['catalog_object_id'], 'quantity': line['quantity']} for line in line_items],
     }
 
     order_res = session.post('https://connect.squareup.com/v2/orders',
