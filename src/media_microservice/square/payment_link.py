@@ -50,6 +50,10 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, str]:
         "shipping_address": shipping_address,
         "accept_partial_authorization": False,
         "buyer_email_address": buyer_email_address,
+        "amount_money": {
+            # "amount": sum([float(l['price']) for l in line_items]),
+            'amount': 1,
+            'currency': 'USD'},
         "countryCode": 'US',
         "currencyCode": 'USD',
     }
