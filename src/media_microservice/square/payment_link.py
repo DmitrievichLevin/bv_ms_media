@@ -41,7 +41,7 @@ def request_payment_link(event: dict[str, Any]) -> dict[str, str]:
         'line_items', "shipping_address", "buyer_email_address", "phone", "source_id")(event_body)
 
     if all(getattr(shipping_address, k, False)
-           for k in ["address_line_1", "address_line_2", "administrative_district_level_1", "country", "first_name", "last_name", "locality", "postal_code"]):
+           for k in ["address_line_1", "administrative_district_level_1", "country", "first_name", "last_name", "locality", "postal_code"]):
 
         body = {
             'idempotency_key': idempotency_key,
