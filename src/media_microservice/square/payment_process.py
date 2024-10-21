@@ -127,10 +127,22 @@ class PaymentProcess(SubProcess):
             json=self.payment_req,
         )
 
-        self.deps["payment_response"] = payment_res.json()
+        payment_json = payment_res.json()
+
+        payment_status = payment_json.get(
+            "payment", {"status": "Failed"}
+        )["status"]
+
+        payment_errors = payment_json.get("errors", None)
+
+        self.deps["payment_response"] = {
+            "status": payment_status,
+            "errors": payment_errors,
+        }
+
         logging.info(
             "Processed Payment Result:\n%s",
-            self.deps["payment_response"],
+            payment_json,
         )
 
     def rollback(self) -> None:

@@ -34,7 +34,7 @@ def lambda_handler(
 
                 body = {
                     "order": result["order"],
-                    "payment_response": result["payment_response"],
+                    "payment": result["payment_response"],
                 }
                 return {
                     "statusCode": 200,
