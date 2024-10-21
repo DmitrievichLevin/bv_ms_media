@@ -10,20 +10,32 @@ from .meta_proc import MetaDelete
 from .meta_proc import MetaProcess
 from .s3_proc import S3Delete
 from .s3_proc import S3Process
-from .square import request_payment_link
+from .square import OrderProcess
+from .square import PaymentProcess
 from .sync_sub import Sync
 
 
-def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
+def lambda_handler(
+    event: LambdaEvent, _context: Any
+) -> dict[Any, Any]:
     """Media Microservice Lambda Handler"""
     method = event["requestContext"]["http"]["method"]
-    path = event['rawPath']
+    path = event["rawPath"]
 
     try:
         # Temp Handle Payment Processing
-        if '/order' in path:
+        if "/order" in path:
             if method == "POST":
-                body = request_payment_link(event)
+                payment_proc = (
+                    Sync().add(OrderProcess).add(PaymentProcess)
+                )
+
+                result = payment_proc.execute(event)
+
+                body = {
+                    "order": result["order"],
+                    "payment_response": result["payment_response"],
+                }
                 return {
                     "statusCode": 200,
                     "headers": {
@@ -34,12 +46,23 @@ def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
                     "body": body,
                 }
             else:
-                return {"statusCode": 405, "body": {"message": f"{method} Not Allowed.", 'service': 'Square'}}
+                return {
+                    "statusCode": 405,
+                    "body": {
+                        "message": f"{method} Not Allowed.",
+                        "service": "Square",
+                    },
+                }
 
         match (method):
             case "POST":
 
-                post_proc: Sync = Sync().add(S3Process).add(MetaProcess).add(DocumentProcess)
+                post_proc: Sync = (
+                    Sync()
+                    .add(S3Process)
+                    .add(MetaProcess)
+                    .add(DocumentProcess)
+                )
 
                 result = post_proc.execute(event)
 
@@ -58,12 +81,14 @@ def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
             case "GET":
                 get_proc = Sync().add(ResolveMedia)
 
-                resolved_media: dict[str, Any] = get_proc.execute(event)
+                resolved_media: dict[str, Any] = get_proc.execute(
+                    event
+                )
                 status = 200
-                if resolved_media['data'] is False:
+                if resolved_media["data"] is False:
                     status = 409
                     body = {"message": "Unable to resolve media."}
-                elif len(resolved_media['data']) == 0:
+                elif len(resolved_media["data"]) == 0:
                     status = 404
                     body = {"message": "Unable to locate media."}
                 else:
@@ -78,16 +103,21 @@ def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
                     "body": body,
                 }
             case "DELETE":
-                get_proc = Sync().add(DocumentProcess).add(S3Delete).add(MetaDelete)
+                get_proc = (
+                    Sync()
+                    .add(DocumentProcess)
+                    .add(S3Delete)
+                    .add(MetaDelete)
+                )
 
                 # Result of sync process
                 result = get_proc.execute(event)
 
                 # Get Removed Media Id's from Process
-                deleted_media_ids = result['deleted']
+                deleted_media_ids = result["deleted"]
 
                 # Get updated doc from result
-                updated_doc = result['updated_doc']
+                updated_doc = result["updated_doc"]
 
                 return {
                     "statusCode": 200,
@@ -96,10 +126,18 @@ def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                     },
-                    "body": {'deleted_media': deleted_media_ids, 'updated_document': DocumentResponse.format(updated_doc)},
+                    "body": {
+                        "deleted_media": deleted_media_ids,
+                        "updated_document": DocumentResponse.format(
+                            updated_doc
+                        ),
+                    },
                 }
             case _:
-                return {"statusCode": 405, "body": {"message": f"{method} Not Allowed."}}
+                return {
+                    "statusCode": 405,
+                    "body": {"message": f"{method} Not Allowed."},
+                }
     except Exception as e:
         return {
             "statusCode": 500,
@@ -108,5 +146,5 @@ def lambda_handler(event: LambdaEvent, _context: Any) -> dict[Any, Any]:
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
             },
-            "body": {'message': f"{e}"},
+            "body": {"message": f"{e}"},
         }
