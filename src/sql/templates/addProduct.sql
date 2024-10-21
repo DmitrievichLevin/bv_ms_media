@@ -23,7 +23,8 @@
 --     id,
 --     item_name,
 --     item_variation;
-SELECT
-    *
-FROM
+DELETE FROM
+    ordered;
+
+DELETE FROM
     orders;

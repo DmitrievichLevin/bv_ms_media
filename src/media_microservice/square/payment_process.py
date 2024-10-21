@@ -71,7 +71,6 @@ class PaymentProcess(SubProcess):
             "line_items",
             "shipping_address",
             "buyer_email_address",
-            "phone",
             "source_id",
         )(
             self.body
