@@ -14,6 +14,8 @@ from urllib3.util.retry import Retry
 
 from ..sync_sub import SubProcess
 
+ENV = os.environ.get("ENV") or "development"
+
 # pylint: disable=pointless-string-statement
 """Example Order Processed Row
 
@@ -76,6 +78,11 @@ class PaymentProcess(SubProcess):
             self.body
         )
 
+        # Payment Amount
+        amount = self.deps["order"]["total"] * 100
+        if ENV == "development":
+            amount = 1
+
         return {
             "idempotency_key": self.idempotency_key,
             "source_id": source_id,
@@ -92,8 +99,7 @@ class PaymentProcess(SubProcess):
             "accept_partial_authorization": False,
             "buyer_email_address": buyer_email_address,
             "amount_money": {
-                # "amount": sum([float(l['price']) for l in line_items]),
-                "amount": self.deps["order"]["total"] * 100,
+                "amount": amount,
                 "currency": "USD",
             },
             "countryCode": "US",

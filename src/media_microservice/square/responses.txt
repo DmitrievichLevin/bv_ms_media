@@ -1,0 +1,199 @@
+Declined payment
+{
+    "payment_response": {
+        "payment": {
+            "card_details": {
+                "avs_status": "AVS_ACCEPTED",
+                "entry_method": "KEYED",
+                "cvv_status": "CVV_ACCEPTED",
+                "card_payment_timeline": {
+                    "authorized_at": "2024-10-21T03:27:30.754Z"
+                },
+                "card": {
+                    "last_4": "3218",
+                    "payment_account_reference": "V0010014621307598855402391382",
+                    "bin": "440393",
+                    "card_brand": "VISA",
+                    "fingerprint": "sq-1-WIqHDmqSr44jhCzadtWaxlVxJEL_lPfdaPNgDpcWiNhYuC3rWN1hUIfhM_9Yf7giDQ",
+                    "exp_month": 7,
+                    "prepaid_type": "PREPAID",
+                    "exp_year": 2027,
+                    "card_type": "DEBIT"
+                },
+                "errors": [
+                    {
+                        "code": "TRANSACTION_LIMIT",
+                        "detail": "Authorization error: 'TRANSACTION_LIMIT'",
+                        "category": "PAYMENT_METHOD_ERROR"
+                    }
+                ],
+                "status": "FAILED",
+                "statement_description": "SQ *MY LEFT NUTS? GOSQ.C"
+            },
+            "buyer_email_address": "jhowar39@emich.edu",
+            "delay_action": "CANCEL",
+            "created_at": "2024-10-21T03:27:29.857Z",
+            "application_details": {
+                "square_product": "ECOMMERCE_API",
+                "application_id": "sq0idp-y-_u0g63-2oWr6GlRWIz0g"
+            },
+            "amount_money": {
+                "amount": 12000,
+                "currency": "USD"
+            },
+            "source_type": "CARD",
+            "location_id": "LTQWW02K3H9RZ",
+            "delayed_until": "2024-10-28T03:27:29.857Z",
+            "updated_at": "2024-10-21T03:27:30.754Z",
+            "version_token": "7N6wAyGuNjknHnTvGNMCmWw1qVXSCbpa0PJQsomWRNC6o",
+            "id": "Pf2vrtiJxmcTQGExzuCHKLmmBU8YY",
+            "shipping_address": {
+                "country": "US",
+                "address_line_1": "1040 Huff NW Rd #3211",
+                "locality": "Atlanta",
+                "last_name": "Howard",
+                "address_line_2": "",
+                "administrative_district_level_1": "GA",
+                "postal_code": "30318",
+                "first_name": "Jalin"
+            },
+            "total_money": {
+                "amount": 12000,
+                "currency": "USD"
+            },
+            "delay_duration": "PT168H",
+            "order_id": "hCb8mOzNsdulEeK6buzw9afRDNSZY",
+            "approved_money": {
+                "amount": 0,
+                "currency": "USD"
+            },
+            "status": "FAILED"
+        },
+        "errors": [
+            {
+                "code": "TRANSACTION_LIMIT",
+                "detail": "Authorization error: 'TRANSACTION_LIMIT'",
+                "category": "PAYMENT_METHOD_ERROR"
+            }
+        ]
+    },
+    "order": {
+        "zip": "30318",
+        "country": "US",
+        "address2": null,
+        "city": "Atlanta",
+        "address1": "1040 Huff NW Rd #3211",
+        "last_name": "Howard",
+        "created_at": 1729481249,
+        "total": 120,
+        "shipped": 0,
+        "tracking_no": null,
+        "phone": "3134459333",
+        "_id": "E34ED80F-AB4A-452E-BF22-188B80724666",
+        "first_name": "Jalin",
+        "email": "jhowar39@emich.edu",
+        "level_1": "GA"
+    }
+}
+
+
+
+Card Expiration wrong
+{
+    "payment_response": {
+        "payment": {
+            "card_details": {
+                "avs_status": "AVS_ACCEPTED",
+                "entry_method": "KEYED",
+                "cvv_status": "CVV_ACCEPTED",
+                "card_payment_timeline": {
+                    "authorized_at": "2024-10-21T03:24:12.685Z"
+                },
+                "card": {
+                    "last_4": "3218",
+                    "payment_account_reference": "V0010014621307598855402391382",
+                    "bin": "440393",
+                    "card_brand": "VISA",
+                    "fingerprint": "sq-1-WIqHDmqSr44jhCzadtWaxlVxJEL_lPfdaPNgDpcWiNhYuC3rWN1hUIfhM_9Yf7giDQ",
+                    "exp_month": 7,
+                    "prepaid_type": "PREPAID",
+                    "exp_year": 2026,
+                    "card_type": "DEBIT"
+                },
+                "errors": [
+                    {
+                        "code": "CARD_EXPIRED",
+                        "detail": "Authorization error: 'CARD_EXPIRED'",
+                        "category": "PAYMENT_METHOD_ERROR"
+                    }
+                ],
+                "status": "FAILED",
+                "statement_description": "SQ *MY LEFT NUTS? GOSQ.C"
+            },
+            "buyer_email_address": "jhowar39@emich.edu",
+            "delay_action": "CANCEL",
+            "created_at": "2024-10-21T03:24:12.214Z",
+            "application_details": {
+                "square_product": "ECOMMERCE_API",
+                "application_id": "sq0idp-y-_u0g63-2oWr6GlRWIz0g"
+            },
+            "amount_money": {
+                "amount": 12000,
+                "currency": "USD"
+            },
+            "source_type": "CARD",
+            "location_id": "LTQWW02K3H9RZ",
+            "delayed_until": "2024-10-28T03:24:12.214Z",
+            "updated_at": "2024-10-21T03:24:12.685Z",
+            "version_token": "ZIUXtiGULSeNBcTj68udSGXrMVtWtKa6BKY0pPbWdIs6o",
+            "id": "fnssiifDLaTPPIU1DK2bncg52h6YY",
+            "shipping_address": {
+                "country": "US",
+                "address_line_1": "1040 Huff NW Rd #3211",
+                "locality": "Atlanta",
+                "last_name": "Howard",
+                "address_line_2": "",
+                "administrative_district_level_1": "GA",
+                "postal_code": "30318",
+                "first_name": "Jalin"
+            },
+            "total_money": {
+                "amount": 12000,
+                "currency": "USD"
+            },
+            "delay_duration": "PT168H",
+            "order_id": "hsOJ9GDTlRxcDhIQkZ0XIJR6aufZY",
+            "approved_money": {
+                "amount": 0,
+                "currency": "USD"
+            },
+            "status": "FAILED"
+        },
+        "errors": [
+            {
+                "code": "CARD_EXPIRED",
+                "detail": "Authorization error: 'CARD_EXPIRED'",
+                "category": "PAYMENT_METHOD_ERROR"
+            }
+        ]
+    },
+    "order": {
+        "zip": "30318",
+        "country": "US",
+        "address2": null,
+        "city": "Atlanta",
+        "address1": "1040 Huff NW Rd #3211",
+        "last_name": "Howard",
+        "created_at": 1729481051,
+        "total": 120,
+        "shipped": 0,
+        "tracking_no": null,
+        "phone": "3134459333",
+        "_id": "1FC1DBFE-9549-4F14-8CFD-30A96A96C2A0",
+        "first_name": "Jalin",
+        "email": "jhowar39@emich.edu",
+        "level_1": "GA"
+    }
+}
+
+
