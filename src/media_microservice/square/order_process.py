@@ -160,8 +160,8 @@ class OrderProcess(SubProcess):
             # Update deps for next SubProcess
             self.deps["order"] = new_order
 
-            sql = "SELECT * FROM `ordered` WHERE `order_id`=%s"
-            cursor.execute(sql, (self.deps["order"]["_id"],))
+            sql = "SELECT * FROM ordered WHERE order_id=%s"
+            cursor.execute(sql, (self.deps["order"]["_id"]))
 
             new_lines = cursor
 
