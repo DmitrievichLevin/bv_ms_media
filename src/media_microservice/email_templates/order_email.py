@@ -113,6 +113,12 @@ def create_order_confirmation(
         quantity += line["qty"]
         line_items += line_item_html(line)
 
+    total_items = ""
+    if quantity > 1:
+        total_items = f"{quantity} items"
+    else:
+        total_items = f"{quantity} item"
+
     # Format Shipping Address
     (
         first_name,
@@ -951,7 +957,7 @@ def create_order_confirmation(
                            <tr>
                             <td valign="top" class="pc-w620-padding-0-0-0-0 pc-w620-align-left" align="left">
                              <div class="pc-font-alt pc-w620-align-left pc-w620-fontSize-16 pc-w620-lineHeight-20" style="line-height: 22px; letter-spacing: -0px; font-family: 'Nunito Sans', Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; font-variant-ligatures: normal; color: #121212; text-align: left; text-align-last: left;">
-                              <div><span>Total ({quantity} item(s))</span>
+                              <div><span>Total ({total_items})</span>
                               </div>
                              </div>
                             </td>
