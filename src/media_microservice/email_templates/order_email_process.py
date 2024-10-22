@@ -39,7 +39,7 @@ class EmailConfirmationProcess(SubProcess):
                 sql = "SELECT * FROM ordered WHERE order_id=%s"
                 cursor.execute(sql, (self.deps["order"]["_id"]))
 
-                new_lines = cursor
+                new_lines = cursor.fetchall()
 
                 logging.info(
                     "Fetching line items for confirmation:\n%s",
