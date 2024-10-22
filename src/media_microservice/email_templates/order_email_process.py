@@ -36,8 +36,25 @@ class EmailConfirmationProcess(SubProcess):
         try:
 
             with self.cursor as cursor:
-                sql = "SELECT * FROM ordered WHERE order_id=%s"
-                cursor.execute(sql, (self.deps["order"]["_id"]))
+                sql = f"""\
+                    SELECT
+    *
+FROM
+    (
+        SELECT
+            *
+        FROM
+            ordered
+        WHERE
+            order_id = {self.deps["order"]["_id"]}
+    ) o
+    LEFT JOIN (
+        SELECT
+            *
+        FROM
+            product
+    ) p ON (o.item_id = p.id)"""
+                cursor.execute(sql)
 
                 new_lines = cursor.fetchall()
 

@@ -23,8 +23,24 @@
 --     id,
 --     item_name,
 --     item_variation;
-DELETE FROM
-    ordered;
-
-DELETE FROM
-    orders;
+-- DELETE FROM
+--     ordered;
+-- DELETE FROM
+--     orders;
+SELECT
+    *
+FROM
+    (
+        SELECT
+            *
+        FROM
+            ordered
+        WHERE
+            order_id = 'C57EFC86-4EE0-41E7-80FA-1C07560E6DC9'
+    ) o
+    LEFT JOIN (
+        SELECT
+            *
+        FROM
+            product
+    ) p ON (o.item_id = p.id)
