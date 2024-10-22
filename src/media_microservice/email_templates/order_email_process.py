@@ -34,9 +34,24 @@ class EmailConfirmationProcess(SubProcess):
     def execute(self) -> None:
         """Execute Email Order"""
         try:
-            send_order_email(
-                self.deps["order"], self.deps["line_items"]
-            )
+
+            with self.cursor as cursor:
+                sql = "SELECT * FROM ordered WHERE order_id=%s"
+                cursor.execute(sql, (self.deps["order"]["_id"]))
+
+                new_lines = cursor
+
+                logging.info(
+                    "Fetching line items for confirmation:\n%s",
+                    new_lines,
+                )
+                self.deps["line_items"] = new_lines
+
+                self.connection.commit()
+
+                send_order_email(
+                    self.deps["order"], self.deps["line_items"]
+                )
         except Exception as e:
             logging.error(
                 "Error in confirmation email, MANUAL PROCESS email: %s",
