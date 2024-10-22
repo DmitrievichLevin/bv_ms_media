@@ -160,6 +160,16 @@ class OrderProcess(SubProcess):
             # Update deps for next SubProcess
             self.deps["order"] = new_order
 
+            sql = "SELECT * FROM `ordered` WHERE `order_id`=%s"
+            cursor.execute(sql, (self.deps["order"]["_id"],))
+
+            new_lines = cursor
+
+            logging.info(
+                "Fetching line items for confirmation:\n%s", new_lines
+            )
+            self.deps["line_items"] = new_lines
+
             self.connection.commit()
 
     def rollback(self) -> None:

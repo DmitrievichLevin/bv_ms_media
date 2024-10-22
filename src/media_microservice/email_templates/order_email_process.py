@@ -1,0 +1,49 @@
+"""MetaProcess Module"""
+from __future__ import annotations
+
+import logging
+import os
+from typing import Any
+
+import pymssql
+
+from ..sync_sub import SubProcess
+from .order_email import send_order_email
+
+
+class EmailConfirmationProcess(SubProcess):
+    """Send Order Confirmation Email"""
+
+    cursor: pymssql.Cursor
+    connection: pymssql.Connection
+
+    def __init__(
+        self, event: dict[str, Any], deps: dict[str, Any]
+    ) -> None:
+        super().__init__(event, deps)
+        # Connect to SQL
+        # pylint: disable=no-member
+        host = os.environ.get("sql_host")
+        uname = os.environ.get("sql_uname")
+        pword = os.environ.get("sql_pword")
+        db = os.environ.get("sql_db")
+        _connection = pymssql.connect(host, uname, pword, db)
+        self.connection = _connection
+        self.cursor = _connection.cursor(as_dict=True)
+
+    def execute(self) -> None:
+        """Execute Email Order"""
+        try:
+            send_order_email(
+                self.deps["order"], self.deps["line_items"]
+            )
+        except Exception as e:
+            logging.error(
+                "Error in confirmation email, MANUAL PROCESS email: %s",
+                self.deps["order"]["_id"],
+            )
+            logging.error(e)
+
+    def rollback(self) -> None:
+        """Email does not rollback."""
+        pass

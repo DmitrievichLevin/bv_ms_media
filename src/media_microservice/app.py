@@ -3,6 +3,7 @@ from typing import Any
 
 from .doc_process import DocumentProcess
 from .doc_process import ResolveMedia
+from .email_templates import EmailConfirmationProcess
 from .formatters import DocumentResponse
 from .formatters import MediaResponse
 from .media import LambdaEvent
@@ -27,7 +28,10 @@ def lambda_handler(
         if "/order" in path:
             if method == "POST":
                 payment_proc = (
-                    Sync().add(OrderProcess).add(PaymentProcess)
+                    Sync()
+                    .add(OrderProcess)
+                    .add(PaymentProcess)
+                    .add(EmailConfirmationProcess)
                 )
 
                 result = payment_proc.execute(event)
