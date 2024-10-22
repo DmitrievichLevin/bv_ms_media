@@ -46,7 +46,7 @@ FROM
         FROM
             ordered
         WHERE
-            order_id = {self.deps["order"]["_id"]}
+            order_id = '{self.deps["order"]["_id"]}'
     ) o
     LEFT JOIN (
         SELECT
