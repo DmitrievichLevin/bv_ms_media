@@ -40,7 +40,25 @@
 --         FROM
 --             product
 --     ) p ON (o.item_id = p.id)
-SELECT
-    *
-from
-    orders
+-- INSERT INTO
+--     product (
+--         id,
+--         item_name,
+--         item_variation,
+--         item_desc,
+--         item_price
+--     )
+-- VALUES
+--     (
+--         'CKGPUH2HUFOQHSRJ3U5WK3Z2',
+--         'Logo Tee',
+--         'Xl',
+--         '100% Cotton Signature Logo T-Shirt',
+--         '100'
+--     )
+UPDATE
+    product
+SET
+    item_desc = 'Grown & Harvested in Oklahoma'
+Where
+    item_name = 'Cashews';
