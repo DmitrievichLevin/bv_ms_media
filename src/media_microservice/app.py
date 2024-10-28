@@ -1,5 +1,5 @@
 """Lambda Handler"""
-import json
+import json as _json
 import logging
 from typing import Any
 
@@ -49,7 +49,7 @@ def lambda_handler(
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                     },
-                    "body": json.dumps(body),
+                    "body": _json.dumps(body),
                 }
             else:
                 return {
@@ -81,7 +81,7 @@ def lambda_handler(
                         "Access-Control-Allow-Origin": "*",
                         "Access-Control-Allow-Methods": "OPTIONS,POST,GET",
                     },
-                    "body": json.body,
+                    "body": body,
                 }
 
             case "GET":
