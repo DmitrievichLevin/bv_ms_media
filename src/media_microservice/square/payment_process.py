@@ -140,6 +140,12 @@ class PaymentProcess(SubProcess):
             "errors": payment_errors,
         }
 
+        if len(payment_errors) > 0:
+
+            raise Exception(  # pylint: disable=broad-exception-raised
+                "Payment failed %s" % payment_errors[0]["code"]
+            )
+
         logging.info(
             "Processed Payment Result:\n%s",
             payment_json,
