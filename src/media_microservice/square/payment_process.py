@@ -133,18 +133,20 @@ class PaymentProcess(SubProcess):
             "payment", {"status": "Failed"}
         )["status"]
 
-        payment_errors = payment_json.get("errors", None)
-
-        self.deps["payment_response"] = {
-            "status": payment_status,
-            "errors": payment_errors,
-        }
+        payment_errors = payment_json.get("errors", [])
 
         if len(payment_errors) > 0:
 
             raise Exception(  # pylint: disable=broad-exception-raised
                 "Payment failed %s" % payment_errors[0]["code"]
             )
+        else:
+            payment_errors = None
+
+        self.deps["payment_response"] = {
+            "status": payment_status,
+            "errors": payment_errors,
+        }
 
         logging.info(
             "Processed Payment Result:\n%s",
