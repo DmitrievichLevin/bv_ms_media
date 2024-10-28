@@ -11,7 +11,7 @@ CREATE TABLE orders (
     zip VARCHAR (255) NOT NULL,
     total FLOAT,
     shipped TINYINT DEFAULT 0,
-    tracking_no VARCHAR(255),
+    tracking_no VARCHAR(255) DEFAULT '',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     country VARCHAR(2) DEFAULT 'US'
 );

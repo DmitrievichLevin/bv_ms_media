@@ -141,7 +141,7 @@ class PaymentProcess(SubProcess):
                 "Payment failed %s" % payment_errors[0]["code"]
             )
         else:
-            payment_errors = None
+            payment_errors = ""
 
         self.deps["payment_response"] = {
             "status": payment_status,
