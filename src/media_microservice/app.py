@@ -1,4 +1,5 @@
 """Lambda Handler"""
+import logging
 from typing import Any
 
 from .doc_process import DocumentProcess
@@ -35,7 +36,7 @@ def lambda_handler(
                 )
 
                 result = payment_proc.execute(event)
-
+                logging.debug("payment result: %s", result)
                 body = {
                     "order": result["order"],
                     "payment": result["payment_response"],

@@ -1250,10 +1250,8 @@ def send_order_email(
     message.attach(part1)
     message.attach(part2)
 
-    with smtplib.SMTP_SSL("smtp.gmail.com") as server:
-        server.login(sender_email, password)
-        server.ehlo()
-        server.sendmail(
-            sender_email, receiver_email, message.as_string()
-        )
-        server.close()
+    server = smtplib.SMTP_SSL("smtp.gmail.com")
+    server.login(sender_email, password)
+    server.ehlo()
+    server.sendmail(sender_email, receiver_email, message.as_string())
+    server.close()
