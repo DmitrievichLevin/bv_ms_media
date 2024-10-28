@@ -38,7 +38,9 @@ class EmailConfirmationProcess(SubProcess):
             with self.cursor as cursor:
                 sql = f"""\
                     SELECT
-    *
+    *, DATEDIFF
+        (SECOND,'1970-01-01',
+        created_at) AS created_at
 FROM
     (
         SELECT

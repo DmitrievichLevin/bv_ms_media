@@ -56,9 +56,27 @@
 --         '100% Cotton Signature Logo T-Shirt',
 --         '100'
 --     )
-UPDATE
-    product
-SET
-    item_desc = 'Grown & Harvested in Oklahoma'
-Where
-    item_name = 'Cashews';
+-- UPDATE
+--     product
+-- SET
+--     item_desc = 'Grown & Harvested in Oklahoma'
+-- Where
+--     item_name = 'Cashews';
+SELECT
+    *,
+    DATEDIFF (SECOND, '1970-01-01', created_at) AS created_at
+FROM
+    (
+        SELECT
+            *
+        FROM
+            ordered
+        WHERE
+            order_id = '{self.deps["order"]["_id"]}'
+    ) o
+    LEFT JOIN (
+        SELECT
+            *
+        FROM
+            product
+    ) p ON (o.item_id = p.id)
